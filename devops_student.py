@@ -7,8 +7,21 @@ class DevOpsStudent(StudentData):  # subclass to StudentData
         self.__current_grade = current_grade  # Private attribute
         self.current_trainer = current_trainer  # Public attribute
 
-    def public_method(self):  # public method
-        return "This method is public, welcome!!"
+    def print_details(self):  # overridden method of abstractmethod from StudentData class
+        return "We are inside the DevOpsStudent Print_details"
 
-    def __private_method(self):  # private method
-        return "This method is private! I love cake! How are you seeing this?!"
+
+# object of test class created
+John = DevOpsStudent(70, "Sharukh")
+John.print_details()
+John.print(100)
+# It is in fact an instance of the studentData class and not the class it was instantiated from
+print(isinstance(John, StudentData))
+
+
+# This will throw a error because the task method inside the StudentData class is an abstract method and cannot
+# be made into a instance. It raises a TypeError: Can't instantiate abstract class StudentData with abstract methods
+# print_details
+# >>> Alice = StudentData()
+# >>> Alice.print_details()
+

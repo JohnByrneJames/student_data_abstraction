@@ -1,19 +1,20 @@
-# Encapsulation
+# Abstraction
 
 #### A concept related to the object oriented approach of programming.
 
-Encapsulation is the packing of data and functions operating on that data into a single component
-and restricting the access to some of the object's components. It essentially means the internal representation of
-an object is generally hidden from view outside of the objects definition.
+Abstraction is another concept of OOP wherein the user is kept unaware of basic implementation of a function. <br>
+property. The user is only able to view basic functionality whereas the internal details are hidden. <br>
+The aim is to allow the user to know what they are doing but not how the work is being done. <br>
+So for example, in an ATM the user just wants to access their money and carry out whatever they need to do, they do not care how the money is actually
+counted or how much money is in the machine. They are free to use the object has a whole.
 
-A good example is a class, it encapsulates all the data that its member methods and attributes have.
-
-[**devops_student**](devops_student.py) **[Parent/ Base Class]**
+[**devops_student**](devops_student.py) **[Parent/ Base Class]** 
 * **Attributes**
     * current_grade `private`
     * current_trainer `public`
 * **Methods**
-    * print_details `public`
+    * print `public`
+    * print_details `abstract method`
     * change_current_grade `private` 
 
 [**student_data**](student_data.py) **[Child/ Derived Class]**
@@ -21,42 +22,25 @@ A good example is a class, it encapsulates all the data that its member methods 
     * public_method `public`
     * private_method `private`
 
-Some would say that Encapsulation is very similar to Abstraction, however there is one major difference :
+Some would say that Abstraction is very similar to Encapsulation, however there is one major difference :
 * **Encapsulation** = Information hiding
 * **Abstraction** = Implementation hiding
 
-To declare a member as **protected** you use a `_` by convention. This tells others : 
-> **"** Don't touch this, unless you are a
-subclass of this class **"**. 
+A common way to handle the complexity of a object is through something known as hierarchical abstraction.
 
-To declare a member as private you use two `__` in front of it to hide it from users when accessing
-them from outside the class.
+A class that contains a abstract method is not allowed to made into an instance. It will raise
+a TypeError: Can't instantiate abstract class AbsClass with the abstract method task. Here we actually inherit from
+the ABC class, this allows us to set the base abstract class in our example which is the student_data class.
 
-If you change the value of a private attribute it will actually take place but you are
-expected to not do it if it has been distinguished as a private attribute. A proper way to do this is
-to add a getter and setter property function that allows proper alterations of private attributes inside
-a class.
+```python
+John = DevOpsStudent(70, "Sharukh")
+John.print_details()
+John.print(100)
 
-```python 
-    # Setter method
-    def setcurrentgrade(self, current_grade):
-        print("set current_grade() called")
-        self.__current_grade = current_grade
-
-    # Getter method
-    def getcurrentgrade(self):
-        print("get current_grade() called")
-        return self.__current_grade
-
-    current_grade = property(getcurrentgrade, setcurrentgrade)
+print(isinstance(John, StudentData))
 ```
 
-Trying to access private attributes and methods of a class will return an attribute error usually,
-this is because python essentially hides a variable to everyone outside the class by performing
-a technique called name mangling, this changes the name of a variable. This is not
-100% secure though as you can still access the attributes and methods by
-entering the altered name which looks like this:
-
-`object._Class__private_method` 
-
-`object._Class__private_attribute`
+Although we initialised the instance "John" through the DevOpsStudent class it is actually an instance of
+the abstract class StudentData, this means that you cannot directly create an instance of StudentData instead you
+must create an abstraction class in this case DevOpsStudent and that way you can access its functionality, without
+knowing exactly how it is done. In this case how it gets the value we pass into print.
